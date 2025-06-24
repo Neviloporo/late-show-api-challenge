@@ -1,10 +1,10 @@
 from server.models import db
 
 class Episode(db.Model):
-    __tablename__ = 'episodes'
+    __tablename__ = "episodes"
 
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.String, nullable=False)
-    number = db.Column(db.Ineger, nullable=False)
+    number = db.Column(db.Integer, nullable=False)
 
-    appearance = db.relationship("Appearance", backref="episode",cascade="all, delete")
+    appearances = db.relationship("Appearance", backref="episode", cascade="all, delete-orphan")

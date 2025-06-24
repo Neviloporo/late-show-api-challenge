@@ -5,25 +5,19 @@ from server.models import db
 
 appearance_bp = Blueprint("appearances", __name__)
 
-@appearance_bp.route("/appearances", methods=["POST"])
+@appearance_bp.route("/", methods=["POST"])
 @jwt_required()
 def create_appearance():
     data = request.get_json()
+    rating = int(data["rating"])
+    if not 1 <= rating <= 5:
+        return jsonify(error="Rating must be 1–5"), 400
 
-    try:
-        appearance = Appearance(
-            rating=data["rating"],
-            guest_id=data["guest_id"],
-            episode_id=data["episode_id"]
-        )
-        db.session.add(appearance)
-        db.session.commit()
-
-        return jsonify({
-            "id": appearance.id,
-            "rating": appearance.rating,
-            "guest_id": appearance.guest_id,
-            "episode_id": appearance.episode_id
-        }), 201
-    except Exception as e:
-        return jsonify({"error": str(e)}), 400
+    appearance = Appearance(
+        rating=rating,
+        guest_id=data["guest_id"],
+        episode_id=data["episode_id"]
+    )
+    db.session.add(appearance)
+    db.session.commit()
+    return jsonify(message="Appearance added", id=appearance.id), 201
