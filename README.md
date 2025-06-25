@@ -64,6 +64,35 @@ flask db migrate -m "initial migration"
 flask db upgrade
 python server/seed.py
 
+### Start the server
+
+## Option 1 - Run directly with python:
+
+    python server/app.py
+
+
+## Option 2 - use flask run(recommended for development): Linux/macOS
+
+    export FLASK_APP=server/app.py
+    export FLASK_ENV=development
+    flask run
+
+## Windows CMD
+
+    set FLASK_APP=server/app.py
+    set FLASK_ENV=development
+    flask run
+
+## Windows PowerShell
+
+    $env:FLASK_APP = "server/app.py"
+    $env:FLASK_ENV = "development"
+    flask run
+
+# The app will now be running at:
+    http://127.0.0.1:5555
+
+
 
 ##  Authentication Flow
 
@@ -73,7 +102,7 @@ python server/seed.py
 Protected endpoints:
 
 - `POST /users`
-- `POST /tokens`
+- `POST /logins`
 - `DELETE /episodes`
 - `GET /episodes`
 
@@ -110,7 +139,7 @@ Protected endpoints:
 
 ![GET Episodes](./Screenshots/Screenshot%20from%202025-06-24%2012-21-10.png)
 
-### POST /tokens
+### POST /logins
 
 ![POST Appearance](./Screenshots/Screenshot%20from%202025-06-24%2012-21-28.png)
 
